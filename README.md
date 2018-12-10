@@ -17,8 +17,22 @@
 
 `dht.dat` DHT（IPv4）文件
 
-`dht6.dat` DHT（IPv6）文件
+`dht6.dat` DHT（IPv6）文件，待添加
 
-`test.sh` 测试脚本时 debug 用的，可能永远用不到了。
+`test.sh` 测试脚本时 debug 用的，~~可能永远用不到了。~~
 
 ### [相关教程](https://p3terx.com/tag/aria2/)
+
+## 更新日志
+
+### 2018-12-11
+* 修复 BT下载多级目录时上传不完整的bug
+* 修复 BT下载多级目录时导致的其它bug
+
+### 2018-12-07
+* 添加 DHT（IPv4）文件
+* 调整配置文件
+* 整合到 [Aria2 一键安装管理脚本](https://github.com/P3TERX/aria2.sh)
+
+### 2018-11-10
+* 首次提交
