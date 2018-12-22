@@ -5,9 +5,9 @@
 
 `aria2.conf` 配置文件本体
 
-### 调用的脚本
+### 附加功能脚本
 
-`autoupload.sh` 下载完成后自动调用 rclone 上传(move)到网盘，删除 `.aria2` 文件，过滤无用文件等。（可选）
+`autoupload.sh` 下载完成后自动调用 rclone 上传(move)到网盘，删除 `.aria2` 文件，过滤无用文件等。（可选，[使用教程](https://p3terx.com/archives/offline-download-of-onedrive-gdrive.html)）
 
 `delete.aria2.sh` 下载完成后删除 `.aria2` 文件。
 
@@ -25,7 +25,16 @@
 
 ## 更新日志
 
+### 2018-12-22
+配置文件：
+* 调整 期望下载速度参数
+
+附加功能脚本：
+* 修复 下载文件夹时复杂情况出现的bug
+* 优化 下载文件夹时的判断条件
+
 ### 2018-12-11
+附加功能脚本：
 * 修复 BT下载多级目录时上传不完整的bug
 * 修复 BT下载多级目录时导致的其它bug
 
