@@ -1,6 +1,6 @@
 #!/bin/bash
 #Description: Aria2 download completes calling Rclone upload
-#Version: 1.0
+#Version: 1.1
 #Author: P3TERX
 #Blog: https://p3terx.com
 
@@ -14,6 +14,14 @@ MaxSize='15G' #限制最高文件大小，默认15G，OneDrive上传限制。
 filepath=$3 #Aria2传递给脚本的原始路径，如果是单文件为/root/Download/1.mp4，如果是文件夹则该值为文件夹内第一个文件，如/root/Download/a/b/1.mp4
 rdp=${filepath#${downloadpath}/} #路径转换，去掉开头的下载路径。
 path=${downloadpath}/${rdp%%/*} #下载文件夹时为顶层文件夹路径。下载单个文件时为文件路径。
+
+echo
+echo -e "  \033[1;33m前方高能！！！上传脚本开始执行！！！\033[0m"
+echo
+echo -e "  \033[1;32m前方高能！！！上传脚本开始执行！！！\033[0m"
+echo
+echo -e "  \033[1;35m前方高能！！！上传脚本开始执行！！！\033[0m"
+echo
 
 if [ $2 -eq 0 ]
 	then
