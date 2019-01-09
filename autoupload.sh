@@ -1,19 +1,19 @@
 #!/bin/bash
 #Description: Aria2 download completes calling Rclone upload
-#Version: 1.1
+#Version: 1.2
 #Author: P3TERX
 #Blog: https://p3terx.com
 
 downloadpath='/root/Download' #Aria2下载目录
 name='Onedrive' #配置Rclone时填写的name
 folder='/DRIVEX/Download' #网盘里的文件夹，留空为整个网盘。
-MinSize='10k' #限制最低上传大小，默认10k，BT下载时可防止上传其他无用文件。会删除文件，谨慎设置。
-MaxSize='15G' #限制最高文件大小，默认15G，OneDrive上传限制。
+MinSize='10k' #限制最低上传大小，仅BT下载时有效，用于过滤无用文件。默认10k，低于此大小的文件不会被上传，并删除文件。
+MaxSize='15G' #限制最高上传大小。默认15G（OneDrive上传限制），超过此大小的文件不会被上传，文件会被保留。
 
 #=================下面不需要修改===================
-filepath=$3 #Aria2传递给脚本的原始路径，如果是单文件为/root/Download/1.mp4，如果是文件夹则该值为文件夹内第一个文件，如/root/Download/a/b/1.mp4
+filepath=$3 #Aria2传递给脚本的文件路径。BT下载有多个文件时该值为文件夹内第一个文件，如/root/Download/a/b/1.mp4
 rdp=${filepath#${downloadpath}/} #路径转换，去掉开头的下载路径。
-path=${downloadpath}/${rdp%%/*} #下载文件夹时为顶层文件夹路径。下载单个文件时为文件路径。
+path=${downloadpath}/${rdp%%/*} #路径转换，下载文件夹时为顶层文件夹路径。普通单文件下载时与文件路径相同。
 
 echo
 echo -e "  \033[1;33m前方高能！！！上传脚本开始执行！！！\033[0m"
@@ -23,26 +23,22 @@ echo
 echo -e "  \033[1;35m前方高能！！！上传脚本开始执行！！！\033[0m"
 echo
 
-if [ $2 -eq 0 ]
+if [ "$path" = "$filepath" ] && [ $2 -eq 1 ] #普通单文件下载
 	then
+		rclone move -v "$filepath" ${name}:${folder} --max-size $MaxSize #移动文件到设定的网盘文件夹
+		rm -vf "$filepath".aria2 #删除.aria.2文件（在下载目录中）
 		exit 0
-elif [ "$path" = "$filepath" ] && [ $2 -eq 1 ] #如果下载的是单个文件
+elif [ "$path" != "$filepath" ] && [ -e "$filepath".aria2 ] #子文件夹或多级目录等情况下的单文件下载
 	then
-		rclone move -v "$filepath" ${name}:${folder} --min-size $MinSize --max-size $MaxSize #移动文件到设定的网盘文件夹
-		rm -vf "$filepath".aria2 #删除残留的.aria.2文件（.aria2 文件在下载目录）
-		exit 0
-elif [ "$path" != "$filepath" ] && [ -e "$filepath".aria2 ] #如果下载的是文件夹，且 .aria2 文件在文件夹中。
-	then
-		rclone move -v "$filepath" ${name}:"${folder}"/"${rdp%%/*}" --min-size $MinSize --max-size $MaxSize #移动文件到设定的网盘文件夹下的同名文件夹
-		rm -vf "$filepath".aria2 #删除残留的.aria2文件（.aria2 文件在文件夹中）
-		rclone delete -v "$path" --max-size $MinSize #删除多余的文件
+		rclone move -v "$filepath" ${name}:"${folder}"/"${rdp%/*}" --max-size $MaxSize #移动文件到设定的网盘文件夹下的相同路径文件夹
+		rm -vf "$filepath".aria2 #删除.aria2文件（在文件夹中）
 		rclone rmdirs -v "$downloadpath" --leave-root #删除空目录
 		exit 0
-elif [ "$path" != "$filepath" ] && [ -e "$path".aria2 ] #如果下载的是文件夹，且 .aria2 文件在下载目录中。（BT下载）
+elif [ "$path" != "$filepath" ] && [ -e "$path".aria2 ] #文件夹下载（BT下载）
 	then
 		rclone move -v "$path" ${name}:"${folder}"/"${rdp%%/*}" --min-size $MinSize --max-size $MaxSize #移动整个文件夹到设定的网盘文件夹
 		rclone delete -v "$path" --max-size $MinSize #删除多余的文件
 		rclone rmdirs -v "$downloadpath" --leave-root #删除空目录
-		rm -vf "$path".aria2 #删除残留的.aria2文件（.aria2 文件在下载目录中）
+		rm -vf "$path".aria2 #删除.aria2文件（在下载目录中）
 		exit 0
 fi

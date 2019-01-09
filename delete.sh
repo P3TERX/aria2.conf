@@ -1,26 +1,25 @@
 #!/bin/bash
 #Description: Delete files after Aria2 download error
-#Version: 1.0
+#Version: 1.1
 #Author: P3TERX
 #Blog: https://p3terx.com
 
 downloadpath='/root/Download' #Aria2下载目录
+
 filepath=$3
 rdp=${filepath#${downloadpath}/}
 path=${downloadpath}/${rdp%%/*}
 
-if [ $2 -eq 0 ]
-	then
-	exit 0
-elif [ "$path" = "$filepath" ] && [ $2 -eq 1 ]
+if [ "$path" = "$filepath" ] && [ $2 -eq 1 ]
 	then
 	rm -vf "$filepath".aria2
-	rm -vrf "$filepath"
+	rm -vf "$filepath"
 	exit 0
 elif [ "$path" != "$filepath" ] && [ -e "$filepath".aria2 ]
 	then
 	rm -vf "$filepath".aria2
-	rmdir "$path"
+	rm -vf "$filepath"
+	rmdir -v "${filepath%/*}"
 	exit 0
 elif [ "$path" != "$filepath" ] && [ -e "$path".aria2 ]
 	then
