@@ -1,6 +1,6 @@
 #!/bin/bash
 #Description: Aria2 download completes calling Rclone upload
-#Version: 1.2
+#Version: 1.3
 #Author: P3TERX
 #Blog: https://p3terx.com
 
@@ -15,27 +15,31 @@ filepath=$3 #Aria2传递给脚本的文件路径。BT下载有多个文件时该
 rdp=${filepath#${downloadpath}/} #路径转换，去掉开头的下载路径。
 path=${downloadpath}/${rdp%%/*} #路径转换，下载文件夹时为顶层文件夹路径。普通单文件下载时与文件路径相同。
 
-echo
-echo -e "  \033[1;33m前方高能！！！上传脚本开始执行！！！\033[0m"
-echo
-echo -e "  \033[1;32m前方高能！！！上传脚本开始执行！！！\033[0m"
-echo
-echo -e "  \033[1;35m前方高能！！！上传脚本开始执行！！！\033[0m"
-echo
+if [ $2 -eq 0 ]
+	then
+		exit 0
+fi
+
+echo && echo -e "  \033[1;33m前方高能！！！开始上传！！！\033[0m" && echo
+echo && echo -e "  \033[1;32m前方高能！！！开始上传！！！\033[0m" && echo
+echo && echo -e "  \033[1;35m前方高能！！！开始上传！！！\033[0m" && echo
 
 if [ "$path" = "$filepath" ] && [ $2 -eq 1 ] #普通单文件下载
 	then
+		echo && echo -e "[\033[1;32m上传\033[0m] $filepath" && echo
 		rclone move -v "$filepath" ${name}:${folder} --max-size $MaxSize #移动文件到设定的网盘文件夹
 		rm -vf "$filepath".aria2 #删除.aria.2文件（在下载目录中）
 		exit 0
 elif [ "$path" != "$filepath" ] && [ -e "$filepath".aria2 ] #子文件夹或多级目录等情况下的单文件下载
 	then
+		echo && echo -e "[\033[1;32m上传\033[0m] $filepath"
 		rclone move -v "$filepath" ${name}:"${folder}"/"${rdp%/*}" --max-size $MaxSize #移动文件到设定的网盘文件夹下的相同路径文件夹
 		rm -vf "$filepath".aria2 #删除.aria2文件（在文件夹中）
 		rclone rmdirs -v "$downloadpath" --leave-root #删除空目录
 		exit 0
 elif [ "$path" != "$filepath" ] && [ -e "$path".aria2 ] #文件夹下载（BT下载）
 	then
+		echo && echo -e "[\033[1;32m上传\033[0m] $path"
 		rclone move -v "$path" ${name}:"${folder}"/"${rdp%%/*}" --min-size $MinSize --max-size $MaxSize #移动整个文件夹到设定的网盘文件夹
 		rclone delete -v "$path" --max-size $MinSize #删除多余的文件
 		rclone rmdirs -v "$downloadpath" --leave-root #删除空目录

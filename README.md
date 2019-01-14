@@ -27,11 +27,17 @@
 ### [相关教程](https://p3terx.com/tag/aria2/)
 
 ## 更新日志
+### 2019-1-14
+附加功能脚本：
+* 修复 `autoupload.sh` 在某些情况下上传整个 `root` 目录的 bug
+* 优化 `autoupload.sh` 在日志中输出上传文件路径
+
 ### 2019-1-9
 附加功能脚本：
 * 修复 `autoupload.sh` 在某些情况下文件上传位置不正确的 bug
 * 修复 `delete.sh` 在某些情况下不删除文件的 bug
 * 其他优化调整
+* ~~新增  `autoupload.sh` 在某些情况下上传整个 `root` 目录的 bug~~
 
 ### 2018-12-25
 配置文件：
