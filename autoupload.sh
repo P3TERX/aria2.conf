@@ -1,6 +1,6 @@
 #!/bin/bash
 #Description: Aria2 download completes calling Rclone upload
-#Version: 1.5
+#Version: 1.6
 #Author: P3TERX
 #Blog: https://p3terx.com
 
@@ -20,15 +20,15 @@ Task_INFO(){
 	echo -e "\033[1;35mDownload path：\033[0m${downloadpath}"
 	echo -e "\033[1;35mFile path: \033[0m${filepath}"
 	echo -e "\033[1;35mUpload path: \033[0m${uploadpath}"
-	echo -e "\033[1;35m.aria2 file path: \033[0m${aria2file}"
 	echo -e "\033[1;35mRemote path：\033[0m${remotepath}"
 	echo -e "-------------------------- [\033[1;33mINFO\033[0m] --------------------------"
 	echo
 }
 
 Upload(){
-	rclone move -v "${uploadpath}" "${remotepath}"
-	rm -vf "${aria2file}" #删除.aria2文件
+	rclone move -v "${uploadpath}" "${remotepath}" #上传
+	rm -vf "${path}".aria2
+	rm -vf "${filepath}".aria2
 	rclone rmdirs -v "${downloadpath}" --leave-root #删除空目录
 }
 
@@ -44,23 +44,20 @@ echo && echo -e "      \033[1;35mU P L O A D ! ! !\033[0m" && echo
 if [ "$path" = "$filepath" ] && [ $2 -eq 1 ] #普通单文件下载，移动文件到设定的网盘文件夹。
 	then
 		uploadpath=${filepath}
-		aria2file="${filepath}".aria2 #.aria.2文件在下载目录中
 		remotepath="${name}:${folder}"
 		Task_INFO
 		Upload
 		exit 0
-elif [ "$path" != "$filepath" ] && [ -e "$path".aria2 ] #文件夹下载（BT下载），移动整个文件夹到设定的网盘文件夹。
+elif [ "$path" != "$filepath" ] && [ $2 -gt 1 ] #BT下载（文件夹内文件数大于1），移动整个文件夹到设定的网盘文件夹。
 	then
 		uploadpath=${path}
-		aria2file="${path}".aria2 #.aria2文件在下载目录中
 		remotepath="${name}:${folder}/${rdp%%/*}"
 		Task_INFO
 		Upload
 		exit 0
-elif [ "$path" != "$filepath" ] && [ $2 -eq 1 ] #子文件夹或多级目录等情况下的单文件下载（第三方度盘工具），移动文件到设定的网盘文件夹下的相同路径文件夹。
+elif [ "$path" != "$filepath" ] && [ $2 -eq 1 ] #第三方度盘工具下载（子文件夹或多级目录等情况下的单文件下载）、BT下载（文件夹内文件数等于1），移动文件到设定的网盘文件夹下的相同路径文件夹。
 	then
 		uploadpath=${filepath}
-		aria2file="${filepath}".aria2 #.aria2文件在文件夹中
 		remotepath="${name}:${folder}/${rdp%/*}"
 		Task_INFO
 		Upload
