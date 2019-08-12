@@ -6,6 +6,10 @@
 
 本项目是一套 Aria2 配置方案，包含了配置文件、附加功能脚本等文件，用于实现 Aria2 功能的增强和扩展。
 
+[Aria2 一键安装管理脚本](https://p3terx.com/archives/aria2-oneclick-installation-management-script.html)使用本项目作为配置方案，推荐使用。
+
+## 功能说明
+
 增强功能：
 * 提升BT下载率和下载速度
 * 下载完成删除残留的`.aria2`后缀名文件
@@ -13,12 +17,13 @@
 
 扩展功能：
 * [OneDrive、Google Drive 等网盘离线下载](https://p3terx.com/archives/offline-download-of-onedrive-gdrive.html)
+
 * [百度网盘转存到 OneDrive 、Google Drive 等其他网盘](https://p3terx.com/archives/baidunetdisk-transfer-to-onedrive-and-google-drive.html)
 
-> **[Aria2 一键安装管理脚本](https://p3terx.com/archives/aria2-oneclick-installation-management-script.html)使用本项目作为配置方案，推荐使用。**
+> 由于项目早期没有写配套的教程，很多小伙伴都是从其他大佬那接触到这个项目的，但经过多次更新，其它对于这个项目的使用方法可能已不再适用，不可避免的会导致一些问题。如果你遇到了问题，可以按照我写的教程直接使用整套方案，严格按照教程来进行操作几乎不会遇到问题。如果遇到问题，先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/joinchat/D7Z5TU8Rw0p8dC-j6ahofw)和小伙伴们一起讨论。
 
 ## 文件说明
-`aria2.conf` 配置文件
+`aria2.conf` Aria2 配置文件。除非你对这些参数非常了解，否则不建议进行任何修改。
 
 ### 附加功能脚本
 `autoupload.sh` 自动上传脚本：在下载完成后执行（[on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete)），调用 Rclone 上传(move)下载的文件到网盘，并删除 `.aria2` 后缀名文件，过滤无用文件（默认不启用）
