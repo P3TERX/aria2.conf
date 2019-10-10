@@ -1,12 +1,13 @@
 #!/bin/bash
 #Description: Aria2 download completes calling Rclone upload
-#Version: 1.6
+#Version: 1.7
 #Author: P3TERX
 #Blog: https://p3terx.com
 
 downloadpath='/root/Download' #Aria2下载目录
 name='Onedrive' #配置Rclone时填写的name
 folder='/DRIVEX/Download' #网盘里的文件夹，留空为整个网盘。
+retry_num=3 #上传失败重试次数
 
 #=================下面不需要修改===================
 filepath=$3 #Aria2传递给脚本的文件路径。BT下载有多个文件时该值为文件夹内第一个文件，如/root/Download/a/b/1.mp4
@@ -26,7 +27,13 @@ Task_INFO(){
 }
 
 Upload(){
-	rclone move -v "${uploadpath}" "${remotepath}" #上传
+	retry=0
+	while [ $retry -le $retry_num -a -e "${uploadpath}" ]; do
+		[ $retry != 0 ] && echo && echo -e "Upload failed! Retry ${retry}/${retry_num} ..." && echo
+		rclone move -v "${uploadpath}" "${remotepath}" #上传
+		retry=$(($retry+1))
+	done
+	[ -e "${uploadpath}" ] && echo && echo -e "Upload failed: ${uploadpath}" && echo
 	rm -vf "${path}".aria2
 	rm -vf "${filepath}".aria2
 	rclone rmdirs -v "${downloadpath}" --leave-root #删除空目录

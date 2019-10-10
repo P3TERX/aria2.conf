@@ -22,7 +22,7 @@
 
 * [百度网盘转存到 OneDrive 、Google Drive 等其他网盘](https://p3terx.com/archives/baidunetdisk-transfer-to-onedrive-and-google-drive.html)
 
-> 由于项目早期没有写配套的教程，很多小伙伴都是从其他大佬那接触到这个项目的，但经过多次更新，其它对于这个项目的使用方法可能已不再适用，不可避免的会导致一些问题。如果你遇到了问题，可以按照我写的教程直接使用整套方案，严格按照教程来进行操作几乎不会遇到问题。如果遇到问题，先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/joinchat/D7Z5TU8Rw0p8dC-j6ahofw)和小伙伴们一起讨论。
+> 由于项目早期没有写配套的教程，很多小伙伴都是从其他大佬那接触到这个项目的，但经过多次更新，其它对于这个项目的使用方法可能已不再适用，不可避免的会导致一些问题。严格按照我的教程来进行操作几乎不会遇到问题。如果遇到问题，先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/joinchat/D7Z5TU8Rw0p8dC-j6ahofw)和小伙伴们一起讨论。要注意提问的方式和提供有用的信息，不然谁也帮不了你。提问前最好去了解《[提问的智慧](https://p3terx.com/go/aHR0cHM6Ly9naXRodWIuY29tL3J5YW5oYW53dS9Ib3ctVG8tQXNrLVF1ZXN0aW9ucy1UaGUtU21hcnQtV2F5L2Jsb2IvbWFzdGVyL1JFQURNRS16aF9DTi5tZA==)》，这能更好的帮助你去解决问题和节约时间。
 
 ## 文件说明
 
@@ -46,15 +46,21 @@
 
 ## 更新日志
 
+### 2019-10-10
+
+附加功能脚本（`autoupload.sh`）：
+
+- 增加 上传失败重试功能
+
+<details>
+<summary>历史记录</summary>
+
 ### 2019-06-08
 
 附加功能脚本（`autoupload.sh`）：
 
 * 优化 路径判断逻辑
 * 修复 BT下载文件夹下所有文件时路径无法判断的 bug
-
-<details>
-<summary>历史记录</summary>
 
 ### 2019-05-23
 
@@ -136,5 +142,3 @@
 * 首次提交
 
 </details>
-
-
