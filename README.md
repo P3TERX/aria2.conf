@@ -46,14 +46,27 @@
 
 ## 更新日志
 
+### 2019-10-21
+
+配置文件(`aria2.conf`)：
+
+- 优化配置参数
+- 解决已完成的任务在重启后重复下载的 bug
+- ~~新增 重启后已完成的任务消失的 bug（雾~~
+
+附加功能脚本：
+
+- 修复 `autoupload.sh` 因 Rlone 上传后剩余空目录导致**上传失败重试功能**误判的 bug
+- 改善 `delete.sh`、`delete.aria2.sh` 路径判断逻辑，增加删除空目录功能。
+
+<details>
+<summary>历史记录</summary>
+
 ### 2019-10-10
 
 附加功能脚本（`autoupload.sh`）：
 
 - 增加 上传失败重试功能
-
-<details>
-<summary>历史记录</summary>
 
 ### 2019-06-08
 

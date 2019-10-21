@@ -1,6 +1,6 @@
 #!/bin/bash
 #Description: Delete .aria2 file after Aria2 download is complete
-#Version: 1.2
+#Version: 1.8
 #Author: P3TERX
 #Blog: https://p3terx.com
 
@@ -15,14 +15,14 @@ if [ $2 -eq 0 ]
 		exit 0
 elif [ "$path" = "$filepath" ] && [ $2 -eq 1 ]
 	then
-	rm -vf "$filepath".aria2
+	[ -e "$filepath".aria2 ] && rm -vf "$filepath".aria2
 	exit 0
-elif [ "$path" != "$filepath" ] && [ -e "$filepath".aria2 ]
+elif [ "$path" != "$filepath" ] && [ $2 -gt 1 ]
 	then
-	rm -vf "$filepath".aria2
+	[ -e "$path".aria2 ] && rm -vf "$path".aria2
 	exit 0
-elif [ "$path" != "$filepath" ] && [ -e "$path".aria2 ]
+elif [ "$path" != "$filepath" ] && [ $2 -eq 1 ]
 	then
-	rm -vf "$path".aria2
+	[ -e "$filepath".aria2 ] && rm -vf "$filepath".aria2
 	exit 0
 fi

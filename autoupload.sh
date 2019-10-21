@@ -1,6 +1,6 @@
 #!/bin/bash
 #Description: Aria2 download completes calling Rclone upload
-#Version: 1.7
+#Version: 1.8
 #Author: P3TERX
 #Blog: https://p3terx.com
 
@@ -30,13 +30,13 @@ Upload(){
 	retry=0
 	while [ $retry -le $retry_num -a -e "${uploadpath}" ]; do
 		[ $retry != 0 ] && echo && echo -e "Upload failed! Retry ${retry}/${retry_num} ..." && echo
-		rclone move -v "${uploadpath}" "${remotepath}" #上传
+		rclone move -v "${uploadpath}" "${remotepath}"
+		rclone rmdirs -v "${downloadpath}" --leave-root
 		retry=$(($retry+1))
 	done
 	[ -e "${uploadpath}" ] && echo && echo -e "Upload failed: ${uploadpath}" && echo
-	rm -vf "${path}".aria2
-	rm -vf "${filepath}".aria2
-	rclone rmdirs -v "${downloadpath}" --leave-root #删除空目录
+	[ -e "${path}".aria2 ] && rm -vf "${path}".aria2
+	[ -e "${filepath}".aria2 ] && rm -vf "${filepath}".aria2
 }
 
 if [ $2 -eq 0 ]
