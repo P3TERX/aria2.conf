@@ -6,7 +6,7 @@
 
 本项目是一套 Aria2 配置方案，包含了配置文件、附加功能脚本等文件，用于实现 Aria2 功能的增强和扩展。
 
-[Aria2 一键安装管理脚本](https://p3terx.com/archives/aria2-oneclick-installation-management-script.html)使用本项目作为配置方案，推荐使用。
+[Aria2 一键安装管理脚本](https://github.com/P3TERX/aria2.sh)使用本项目作为配置方案，推荐使用。
 
 ## 功能说明
 
@@ -15,36 +15,46 @@
 * 提升BT下载率和下载速度
 * 下载完成删除残留的`.aria2`后缀名文件
 * 下载错误或取消下载删除未完成的文件
+* 一键获取 BT tracker
 
 扩展功能：
 
 * [OneDrive、Google Drive 等网盘离线下载](https://p3terx.com/archives/offline-download-of-onedrive-gdrive.html)
-
 * [百度网盘转存到 OneDrive 、Google Drive 等其他网盘](https://p3terx.com/archives/baidunetdisk-transfer-to-onedrive-and-google-drive.html)
 
-> 由于项目早期没有写配套的教程，很多小伙伴都是从其他大佬那接触到这个项目的，但经过多次更新，其它对于这个项目的使用方法可能已不再适用，不可避免的会导致一些问题。严格按照我的教程来进行操作几乎不会遇到问题。如果遇到问题，先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/joinchat/D7Z5TU8Rw0p8dC-j6ahofw)和小伙伴们一起讨论。要注意提问的方式和提供有用的信息，不然谁也帮不了你。提问前最好去了解《[提问的智慧](https://p3terx.com/go/aHR0cHM6Ly9naXRodWIuY29tL3J5YW5oYW53dS9Ib3ctVG8tQXNrLVF1ZXN0aW9ucy1UaGUtU21hcnQtV2F5L2Jsb2IvbWFzdGVyL1JFQURNRS16aF9DTi5tZA==)》，这能更好的帮助你去解决问题和节约时间。
+> **TIPS：** 如果遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/joinchat/D7Z5TU8Rw0p8dC-j6ahofw)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。
 
 ## 文件说明
 
-`aria2.conf` Aria2 配置文件。除非你对这些参数非常了解，否则不建议进行任何修改。
+`aria2.conf` - Aria2 配置文件。除非你对这些参数非常了解，否则不建议进行任何修改。
 
 ### 附加功能脚本
 
-`autoupload.sh` 自动上传脚本：在下载完成后执行（[on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete)），调用 Rclone 上传(move)下载的文件到网盘，并删除 `.aria2` 后缀名文件，过滤无用文件（默认不启用）
+`autoupload.sh` - 自动上传脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，调用 Rclone 上传(move)下载的文件到网盘，并删除 `.aria2` 后缀名文件。（默认不启用）
 
-`delete.aria2.sh` .aria2后缀文件删除脚本：在下载完成后执行（[on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete)），删除 `.aria2` 后缀名文件（默认启用）
+`delete.aria2.sh` - `*.aria2`文件删除脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，删除 `.aria2` 后缀名文件。（默认启用）
 
-`delete.sh` 删除脚本：在下载停止后执行（[on-download-stop](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-stop)），删除文件及 `.aria2` 后缀名文件。（默认启用）
+`delete.sh` - 删除脚本：在下载停止后执行([on-download-stop](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-stop))，删除文件及 `.aria2` 后缀名文件。（默认启用）
 
-`info.sh` 任务信息显示脚本：在下载暂停后执行（[on-download-pause](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-pause)），输出下载任务信息到日志中（默认不启用）
+`info.sh` - 任务信息显示脚本：在下载暂停后执行([on-download-pause](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-pause))，输出下载任务信息到日志中。（debug 专用）
 
-### 其他文件
+`tracker.sh` - BT tracker 获取脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行`bash <(curl -fsSL git.io/tracker.sh)`命令即可获取[最新 tracker 列表](https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt)并自动转换为 Aria2 可用格式添加到配置文件中。
 
-`dht.dat` DHT（IPv4）文件
+### DHT 文件
 
-`dht6.dat` DHT（IPv6）文件
+提升 BT 下载率和下载速度的关键之一。相关科普：《[解决 Aria2 无法下载磁力链接、BT种子和速度慢的问题](https://p3terx.com/archives/solved-aria2-cant-download-magnetic-link-bt-seed-and-slow-speed.html)》
+
+`dht.dat` - DHT（IPv4）文件
+
+`dht6.dat` - DHT（IPv6）文件
 
 ## 更新日志
+
+### 2019-10-23
+
+附加功能脚本：
+
+- 新增 BT tracker 获取脚本
 
 ### 2019-10-21
 
