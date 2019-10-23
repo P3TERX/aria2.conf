@@ -1,8 +1,11 @@
 #!/bin/bash
-#Description: Display Aria2 download information when paused
-#Version: 1.3
-#Author: P3TERX
-#Blog: https://p3terx.com
+#=================================================
+#	Description: Display Aria2 download information when paused
+#	Lisence: MIT
+#	Version: 1.3
+#	Author: P3TERX
+#	Blog: https://p3terx.com
+#=================================================
 
 downloadpath='/root/Download' #Aria2下载目录
 

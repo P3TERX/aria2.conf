@@ -1,8 +1,11 @@
 #!/bin/bash
-#Description: Aria2 download completes calling Rclone upload
-#Version: 1.8
-#Author: P3TERX
-#Blog: https://p3terx.com
+#=================================================
+#	Description: Aria2 download completes calling Rclone upload
+#	Lisence: MIT
+#	Version: 1.8
+#	Author: P3TERX
+#	Blog: https://p3terx.com
+#=================================================
 
 downloadpath='/root/Download' #Aria2下载目录
 name='Onedrive' #配置Rclone时填写的name

@@ -1,8 +1,11 @@
 #!/bin/bash
-#Description: Delete files after Aria2 download error
-#Version: 1.8
-#Author: P3TERX
-#Blog: https://p3terx.com
+#=================================================
+#	Description: Delete files after Aria2 download error
+#	Lisence: MIT
+#	Version: 1.8
+#	Author: P3TERX
+#	Blog: https://p3terx.com
+#=================================================
 
 downloadpath='/root/Download' #Aria2下载目录
 

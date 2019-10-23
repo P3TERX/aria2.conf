@@ -1,8 +1,11 @@
 #!/bin/bash
-#Description: Delete .aria2 file after Aria2 download is complete
-#Version: 1.8
-#Author: P3TERX
-#Blog: https://p3terx.com
+#=================================================
+#	Description: Delete .aria2 file after Aria2 download is complete
+#	Lisence: MIT
+#	Version: 1.8
+#	Author: P3TERX
+#	Blog: https://p3terx.com
+#=================================================
 
 downloadpath='/root/Download' #Aria2下载目录
 
