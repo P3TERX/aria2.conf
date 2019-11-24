@@ -1,8 +1,8 @@
 # Aria2 完美配置
 
-[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/P3TERX/aria2_perfect_config/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Stars)](https://github.com/P3TERX/aria2_perfect_config/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Fork)](https://github.com/P3TERX/aria2_perfect_config/fork)
+[![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square&label=LICENSE)](https://github.com/P3TERX/aria2_perfect_config/blob/master/LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Stars)](https://github.com/P3TERX/aria2_perfect_config/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Forks)](https://github.com/P3TERX/aria2_perfect_config/fork)
 
 本项目是一套 Aria2 配置方案，包含了配置文件、附加功能脚本等文件，用于实现 Aria2 功能的增强和扩展。
 
@@ -38,7 +38,7 @@
 
 `info.sh` - 任务信息显示脚本：在下载暂停后执行([on-download-pause](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-pause))，输出下载任务信息到日志中。（debug 专用）
 
-`tracker.sh` - BT tracker 获取脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行`bash <(curl -fsSL git.io/tracker.sh)`命令即可获取[最新 tracker 列表](https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt)并自动转换为 Aria2 可用格式添加到配置文件中。
+`tracker.sh` - BT tracker 获取脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行`bash <(wget -qO- git.io/tracker.sh)`命令即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。
 
 ### DHT 文件
 
@@ -49,6 +49,15 @@
 `dht6.dat` - DHT（IPv6）文件
 
 ## 更新日志
+
+### 2019-11-25
+
+附加功能脚本：
+
+- 修改 Trackers 来源([XIU2/TrackersListCollection](https://github.com/XIU2/TrackersListCollection))
+
+<details>
+<summary>历史记录</summary>
 
 ### 2019-10-23
 
@@ -68,9 +77,6 @@
 
 - 修复 `autoupload.sh` 因 Rlone 上传后剩余空目录导致**上传失败重试功能**误判的 bug
 - 改善 `delete.sh`、`delete.aria2.sh` 路径判断逻辑，增加删除空目录功能。
-
-<details>
-<summary>历史记录</summary>
 
 ### 2019-10-10
 
