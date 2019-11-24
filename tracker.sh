@@ -2,7 +2,7 @@
 #=================================================
 #   Description: Get trackers and add to aria2.conf
 #   Lisence: MIT
-#   Version: 1.0
+#   Version: 1.1
 #   Author: P3TERX
 #   Blog: https://p3terx.com
 #=================================================
@@ -10,7 +10,10 @@ INFO="[\033[32mINFO\033[0m]"
 ERROR="[\033[31mERROR\033[0m]"
 echo && echo -e "$INFO Get trackers ..."
 aria2_conf=${1:-aria2.conf}
-tracker=$(curl -fLs https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt | awk NF | sed ":a;N;s/\n/,/g;ta")
+# https://github.com/ngosang/trackerslist
+#tracker=$(wget -qO- https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt | awk NF | sed ":a;N;s/\n/,/g;ta")
+# https://github.com/XIU2/TrackersListCollection
+tracker=$(wget -qO- https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt | awk NF | sed ":a;N;s/\n/,/g;ta")
 [ -z $tracker ] && echo -e "
 $ERROR Unable to get trackers, network failure or invalid links." && exit 1
 echo -e "
