@@ -50,14 +50,24 @@
 
 ## 更新日志
 
+### 2019-11-28
+
+配置文件(`aria2.conf`)：
+
+- 优化配置参数
+
+其它文件：
+
+- 更新 DHT 文件
+
+<details>
+<summary>历史记录</summary>
+
 ### 2019-11-25
 
 附加功能脚本：
 
 - 修改 Trackers 来源([XIU2/TrackersListCollection](https://github.com/XIU2/TrackersListCollection))
-
-<details>
-<summary>历史记录</summary>
 
 ### 2019-10-23
 
