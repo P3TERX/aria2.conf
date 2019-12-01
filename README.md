@@ -22,7 +22,7 @@
 * [OneDrive、Google Drive 等网盘离线下载](https://p3terx.com/archives/offline-download-of-onedrive-gdrive.html)
 * [百度网盘转存到 OneDrive 、Google Drive 等其他网盘](https://p3terx.com/archives/baidunetdisk-transfer-to-onedrive-and-google-drive.html)
 
-> **TIPS：** 如果遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/joinchat/D7Z5TU8Rw0p8dC-j6ahofw)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。
+> **TIPS：** 如果遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。
 
 ## 文件说明
 
