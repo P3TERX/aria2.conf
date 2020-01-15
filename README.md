@@ -38,7 +38,7 @@
 
 `info.sh` - 任务信息显示脚本：在下载暂停后执行([on-download-pause](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-pause))，输出下载任务信息到日志中。（debug 专用）
 
-`tracker.sh` - BT tracker 获取脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行`bash <(wget -qO- git.io/tracker.sh)`命令即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。
+`tracker.sh` - BT tracker 获取脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。由于脚本具有时效性，建议执行`bash <(wget -qO- git.io/tracker.sh)`命令获取最新脚本并直接运行。其它使用方法详见[这里](https://p3terx.com/archives/solved-aria2-cant-download-magnetic-link-bt-seed-and-slow-speed.html)。
 
 ### DHT 文件
 
@@ -50,6 +50,14 @@
 
 ## 更新日志
 
+### 2020-1-15
+
+- 调整脚本注释与格式。
+- 优化`delete.sh`判断逻辑，防止不正确的使用方式（路径不一致）导致的文件被删除。
+
+<details>
+<summary>历史记录</summary>
+
 ### 2019-11-28
 
 配置文件(`aria2.conf`)：
@@ -59,9 +67,6 @@
 其它文件：
 
 - 更新 DHT 文件
-
-<details>
-<summary>历史记录</summary>
 
 ### 2019-11-25
 

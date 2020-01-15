@@ -1,13 +1,15 @@
 #!/bin/bash
-#=================================================
+#============================================================
+# https://github.com/P3TERX/aria2.conf
+# File name：info.sh
 # Description: Display Aria2 download information when paused
 # Lisence: MIT
 # Version: 1.3
 # Author: P3TERX
 # Blog: https://p3terx.com
-#=================================================
+#============================================================
 
-downloadpath='/root/Download' #Aria2下载目录
+downloadpath='/root/Download'
 
 filepath=$3
 rdp=${filepath#${downloadpath}/}
