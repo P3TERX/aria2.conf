@@ -1,34 +1,41 @@
 # Aria2 完美配置
 
 [![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square&label=LICENSE)](https://github.com/P3TERX/aria2_perfect_config/blob/master/LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Stars)](https://github.com/P3TERX/aria2_perfect_config/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Forks)](https://github.com/P3TERX/aria2_perfect_config/fork)
+[![GitHub Stars](https://img.shields.io/github/stars/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Stars&logo=github)](https://github.com/P3TERX/aria2_perfect_config/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Forks&logo=github)](https://github.com/P3TERX/aria2_perfect_config/fork)
 
-本项目是一套 Aria2 配置方案，包含了配置文件、附加功能脚本等文件，用于实现 Aria2 功能的增强和扩展。
+本项目是一套 Aria2 配置方案，包含了配置文件、附加功能脚本等文件，用于实现 Aria2 功能的增强和扩展，提升 Aria2 的使用体验，解决 Aria2 在使用中遇到的 BT 下载无速度、文件残留占用磁盘空间、任务丢失、重复下载等问题。
 
-[Aria2 一键安装管理脚本](https://github.com/P3TERX/aria2.sh)使用本项目作为配置方案，推荐使用。
+> **TIPS:** 如果遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。
 
-## 功能说明
+## 功能特性
 
-增强功能：
+* BT 下载率高、速度快
+* 重启后不丢失任务进度、不重复下载
+* 下载错误或取消下载自动删除未完成的文件防止磁盘空间占用
+* 下载完成自动清除`.aria2`后缀名文件
+* 一键获取 BT tracker，进一步提升 BT 下载速度
+* 更好的 PT 下载支持
+* 防版权投诉、防迅雷吸血（需手动开启）
 
-* 提升BT下载率和下载速度
-* 下载完成删除残留的`.aria2`后缀名文件
-* 下载错误或取消下载删除未完成的文件
-* 一键获取 BT tracker
+## 部署方案
 
-扩展功能：
+- 一键安装管理脚本：[aria2.sh](https://github.com/P3TERX/aria2.sh) 
+
+- Docker 容器镜像：[Aria2 Pro](https://github.com/P3TERX/docker-aria2-pro) 
+
+## 进阶玩法
 
 * [OneDrive、Google Drive 等网盘离线下载](https://p3terx.com/archives/offline-download-of-onedrive-gdrive.html)
 * [百度网盘转存到 OneDrive 、Google Drive 等其他网盘](https://p3terx.com/archives/baidunetdisk-transfer-to-onedrive-and-google-drive.html)
 
-> **TIPS：** 如果遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。
-
 ## 文件说明
 
-`aria2.conf` - Aria2 配置文件。除非你对这些参数非常了解，否则不建议进行任何修改。
+`aria2.conf` - Aria2 配置文件。除非你对这些参数非常了解，否则修改后可能导致特性失效。
 
 ### 附加功能脚本
+
+> **TIPS:** 脚本需配合配置文件使用，仅适用于 GNU/Linux
 
 `autoupload.sh` - 自动上传脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，调用 Rclone 上传(move)下载的文件到网盘，并删除 `.aria2` 后缀名文件。（默认不启用）
 
@@ -38,7 +45,7 @@
 
 `info.sh` - 任务信息显示脚本：在下载暂停后执行([on-download-pause](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-pause))，输出下载任务信息到日志中。（debug 专用）
 
-`tracker.sh` - BT tracker 获取脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。由于脚本具有时效性，建议执行`bash <(wget -qO- git.io/tracker.sh)`命令获取最新脚本并直接运行。其它使用方法详见[这里](https://p3terx.com/archives/solved-aria2-cant-download-magnetic-link-bt-seed-and-slow-speed.html)。
+`tracker.sh` - BT tracker 获取脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。执行`bash <(wget -qO- git.io/tracker.sh)`命令获取最新脚本并直接运行。其它使用方法详见[这里](https://p3terx.com/archives/solved-aria2-cant-download-magnetic-link-bt-seed-and-slow-speed.html)。
 
 ### DHT 文件
 
@@ -46,17 +53,24 @@
 
 `dht.dat` - DHT（IPv4）文件
 
-`dht6.dat` - DHT（IPv6）文件
+`dht6.dat` - DHT（IPv6）文件（目前数据为空，仅用作占位）
 
 ## 更新日志
 
-### 2020-1-15
+### 2020-01-22
 
-- 调整脚本注释与格式。
-- 优化`delete.sh`判断逻辑，防止不正确的使用方式（路径不一致）导致的文件被删除。
+配置文件(`aria2.conf`)：
+- 默认关闭 IPv6 相关功能，防止不支持 IPv6 的情况下导致的 DHT 功能异常。
+- 更新客户端伪装设置，理论上可更好的支持 PT 下载。
+- 新增 BT 加密设置，理论上可防版权投诉、迅雷吸血。
 
 <details>
 <summary>历史记录</summary>
+
+### 2020-01-15
+
+- 调整脚本注释与格式。
+- 优化`delete.sh`判断逻辑，防止不正确的使用方式（路径不一致）导致的文件被删除。
 
 ### 2019-11-28
 
@@ -186,3 +200,7 @@
 * 首次提交
 
 </details>
+
+## 声明
+
+本项目使用 [MIT](https://github.com/P3TERX/aria2.conf/blob/master/LICENSE) 开源协议，对于本项复制、修改、发布等行为请遵守相关协议，并保留所有文件顶部的版权信息。
