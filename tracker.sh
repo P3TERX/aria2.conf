@@ -4,7 +4,7 @@
 # File name：tracker.sh
 # Description: Get trackers and add to aria2.conf
 # Lisence: MIT
-# Version: 1.1
+# Version: 1.2
 # Author: P3TERX
 # Blog: https://p3terx.com
 #=================================================
@@ -13,11 +13,31 @@ INFO="[\033[32mINFO\033[0m]"
 ERROR="[\033[31mERROR\033[0m]"
 aria2_conf=${1:-aria2.conf}
 
-echo && echo -e "$INFO Get trackers ..."
+echo && echo -e "$INFO Check downloader ..."
+if [ `command -v wget` ]; then
+    DOWNLOADER='wget -qO-'
+elif [ `command -v curl` ]; then
+    DOWNLOADER='curl -fsSL'
+else
+    echo -e "$ERROR curl or wget is not installed."
+fi
+
+# BT tracker is provided by the following project.
 # https://github.com/ngosang/trackerslist
-#tracker=$(wget -qO- https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt | awk NF | sed ":a;N;s/\n/,/g;ta")
 # https://github.com/XIU2/TrackersListCollection
-tracker=$(wget -qO- https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt | awk NF | sed ":a;N;s/\n/,/g;ta")
+# Alternative link provided by jsDelivr.
+# https://www.jsdelivr.com
+echo && echo -e "$INFO Get trackers ..."
+tracker=$(
+    ${DOWNLOADER} https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all_aria2.txt || \
+    ${DOWNLOADER} https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection/all_aria2.txt || \
+    {
+        ${DOWNLOADER} https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt  || \
+        ${DOWNLOADER} https://cdn.jsdelivr.net/gh/ngosang/trackerslist/trackers_all.txt
+    } \
+    | awk NF | sed ":a;N;s/\n/,/g;ta"
+)
+
 [ -z $tracker ] && echo -e "
 $ERROR Unable to get trackers, network failure or invalid links." && exit 1
 echo -e "
