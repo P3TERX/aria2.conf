@@ -1,38 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #=====================================================
 # https://github.com/P3TERX/aria2.conf
 # File name：delete.sh
 # Description: Delete files after Aria2 download error
 # Lisence: MIT
-# Version: 1.9
+# Version: 2.0
 # Author: P3TERX
 # Blog: https://p3terx.com
 #=====================================================
 
-# Aria2下载目录
-# TIPS：一键脚本推荐使用选项进行修改，Docker 无需修改。
-downloadpath='/root/Download'
+DOWNLOAD_PATH='/root/Download'
 
-#=====================================================
+FILE_PATH=$3
+REMOVE_DOWNLOAD_PATH=${FILE_PATH#${DOWNLOAD_PATH}/}
+TOP_PATH=${DOWNLOAD_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}
+LIGHT_GREEN_FONT_PREFIX="\033[1;32m"
+FONT_COLOR_SUFFIX="\033[0m"
+INFO="[${LIGHT_GREEN_FONT_PREFIX}INFO${FONT_COLOR_SUFFIX}]"
 
-filepath=$3
-rdp=${filepath#${downloadpath}/}
-path=${downloadpath}/${rdp%%/*}
+echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Download error or stop, start deleting files..."
 
-if [ $2 -eq 0 ]
-    then
-        exit 0
-elif [ "$path" = "$filepath" ] && [ $2 -eq 1 ]
-    then
-        [ -e "$filepath".aria2 ] && rm -vf "$filepath".aria2 "$filepath"
-        exit 0
-elif [ "$path" != "$filepath" ] && [ $2 -gt 1 ]
-    then
-        [ -e "$path".aria2 ] && rm -vrf "$path".aria2 "$path"
-        exit 0
-elif [ "$path" != "$filepath" ] && [ $2 -eq 1 ]
-    then
-        [ -e "$filepath".aria2 ] && rm -vf "$filepath".aria2 "$filepath"
-        find "${downloadpath}" ! -path "${downloadpath}" -depth -type d -empty -exec rm -vrf {} \;
-        exit 0
+if [ $2 -eq 0 ]; then
+    exit 0
+elif [ -e "${FILE_PATH}.aria2" ]; then
+    rm -vf "${FILE_PATH}.aria2" "${FILE_PATH}"
+elif [ -e "${TOP_PATH}.aria2" ]; then
+    rm -vrf "${TOP_PATH}.aria2" "${TOP_PATH}"
 fi
+find "${DOWNLOAD_PATH}" ! -path "${DOWNLOAD_PATH}" -depth -type d -empty -exec rm -vrf {} \;

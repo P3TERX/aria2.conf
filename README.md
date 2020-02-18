@@ -6,8 +6,6 @@
 
 本项目是一套 Aria2 配置方案，包含了配置文件、附加功能脚本等文件，用于实现 Aria2 功能的增强和扩展，提升 Aria2 的使用体验，解决 Aria2 在使用中遇到的 BT 下载无速度、文件残留占用磁盘空间、任务丢失、重复下载等问题。
 
-> **TIPS:** 如果遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。
-
 ## 功能特性
 
 * BT 下载率高、速度快
@@ -17,12 +15,13 @@
 * 一键获取 BT tracker，进一步提升 BT 下载速度
 * 更好的 PT 下载支持
 * 防版权投诉、防迅雷吸血
+* 联动 RCLONE 自动上传
 
 ## 部署方案
 
-- 一键安装管理脚本：[aria2.sh](https://github.com/P3TERX/aria2.sh) 
+- [Aria2 一键安装管理脚本](https://github.com/P3TERX/aria2.sh) 
 
-- Docker 容器镜像：[Aria2 Pro](https://github.com/P3TERX/docker-aria2-pro) 
+- [Aria2 Pro](https://github.com/P3TERX/docker-aria2-pro) Docker 容器镜像
 
 ## 进阶玩法
 
@@ -55,16 +54,34 @@
 
 `dht6.dat` - DHT（IPv6）文件（目前数据为空，仅用作占位）
 
+## FAQ
+
+遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[Aria2 TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。诸如 “为什么不能使用？”、“那你能帮帮我吗？” 之类的问题并不能解决什么问题，你只能得到否定的回答。
+
 ## 更新日志
+
+### 2020-02-18
+
+> **TIPS:** 本次更新重构了所有附加功能脚本。使用 [Aria2 一键安装管理脚本](https://github.com/P3TERX/aria2.sh) 的小伙伴请卸载后升级到最新脚本部署。使用 [Aria2 Pro](https://github.com/P3TERX/docker-aria2-pro)  Docker 镜像的小伙伴请删除配置文件目录后拉取最新镜像进行部署。
+
+RCLONE 自动上传脚本（`autoupload.sh`） ：
+- 文件过滤功能强势回归，文件大小过滤、文件类型过滤，功能更强大。
+- 新增 RCLONE 高级设置：自定义配置文件路径、配置文件解密、并行上传数等功能。
+- 增强上传失败重试机制。
+
+其它：
+- 优化自动删除脚本（`delete.sh`、`delete.aria2.sh`）判断逻辑。
+- 移除配置文件(`aria2.conf`)过时配置项
+- 更新 DHT 文件
+
+<details>
+<summary>历史记录</summary>
 
 ### 2020-02-05
 
 配置文件(`aria2.conf`)：
 - 更新客户端伪装设置
 - 默认开启强制加密（防版权投诉、迅雷吸血）
-
-<details>
-<summary>历史记录</summary>
 
 ### 2020-01-22
 

@@ -1,56 +1,52 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #============================================================
 # https://github.com/P3TERX/aria2.conf
 # File name：info.sh
 # Description: Display Aria2 download information when paused
 # Lisence: MIT
-# Version: 1.3
+# Version: 2.0
 # Author: P3TERX
 # Blog: https://p3terx.com
 #============================================================
 
-downloadpath='/root/Download'
+DOWNLOAD_PATH='/root/Download'
 
-filepath=$3
-rdp=${filepath#${downloadpath}/}
-path=${downloadpath}/${rdp%%/*}
+FILE_PATH=$3
+REMOVE_DOWNLOAD_PATH=${FILE_PATH#${DOWNLOAD_PATH}/}
+TOP_PATH=${DOWNLOAD_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}
+LIGHT_GREEN_FONT_PREFIX="\033[1;32m"
+YELLOW_FONT_PREFIX="\033[1;33m"
+LIGHT_PURPLE_FONT_PREFIX="\033[1;35m"
+FONT_COLOR_SUFFIX="\033[0m"
+INFO="[${LIGHT_GREEN_FONT_PREFIX}INFO${FONT_COLOR_SUFFIX}]"
 
-if [ $2 -eq 0 ]
-    then
-        exit 0
-elif [ "$path" = "$filepath" ] && [ $2 -eq 1 ]
-    then
-        uploadpath=$filepath
-        aria2file="$filepath".aria2
-elif [ "$path" != "$filepath" ] && [ -e "$filepath".aria2 ]
-    then
-        uploadpath=$filepath
-        aria2file="$filepath".aria2
-elif [ "$path" != "$filepath" ] && [ -e "$path".aria2 ]
-    then
-        uploadpath=$path
-        aria2file="$path".aria2
+if [ -e "${FILE_PATH}.aria2" ]; then
+    DOT_ARIA2_FILE="${FILE_PATH}.aria2"
+elif [ -e "${TOP_PATH}.aria2" ]; then
+    DOT_ARIA2_FILE="${TOP_PATH}.aria2"
+fi
+
+if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then
+    UPLOAD_PATH="${FILE_PATH}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"
+elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -gt 1 ]; then
+    UPLOAD_PATH="${TOP_PATH}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}"
+elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -eq 1 ]; then
+    UPLOAD_PATH="${FILE_PATH}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%/*}"
 fi
 
 echo
-echo
-echo -e "[\033[1;32m暂停\033[0m] 下载任务信息："
-echo -e "-------------------------- [\033[1;33m信息\033[0m] --------------------------"
-echo -e "\033[1;35m文件数：\033[0m$2"
-echo -e "\033[1;35m下载路径：\033[0m${downloadpath}"
-echo -e "\033[1;35m文件路径：\033[0m${filepath}"
-echo -e "\033[1;35m上传路径：\033[0m${uploadpath}"
-echo -e "\033[1;35m.aria2 文件路径：\033[0m${aria2file}"
-echo -e "-------------------------- [\033[1;33m信息\033[0m] --------------------------"
-echo
-echo
-echo -e "[\033[1;32mPAUSE\033[0m] Download task information:"
-echo -e "-------------------------- [\033[1;33mINFO\033[0m] --------------------------"
-echo -e "\033[1;35mNumber of files: \033[0m$2"
-echo -e "\033[1;35mDownload path：\033[0m${downloadpath}"
-echo -e "\033[1;35mFile path: \033[0m${filepath}"
-echo -e "\033[1;35mUpload path: \033[0m${uploadpath}"
-echo -e "\033[1;35m.aria2 file path: \033[0m${aria2file}"
-echo -e "-------------------------- [\033[1;33mINFO\033[0m] --------------------------"
-echo
+echo -e "
+$(date +"%m/%d %H:%M:%S") ${INFO} Task pause.
+-------------------------- [${YELLOW_FONT_PREFIX}TASK INFO${FONT_COLOR_SUFFIX}] --------------------------
+${LIGHT_PURPLE_FONT_PREFIX}Number of files:${FONT_COLOR_SUFFIX} $2
+${LIGHT_PURPLE_FONT_PREFIX}Download path:${FONT_COLOR_SUFFIX} ${DOWNLOAD_PATH}
+${LIGHT_PURPLE_FONT_PREFIX}File path:${FONT_COLOR_SUFFIX} ${FILE_PATH}
+${LIGHT_PURPLE_FONT_PREFIX}.aria2 file path:${FONT_COLOR_SUFFIX} ${DOT_ARIA2_FILE}
+${LIGHT_PURPLE_FONT_PREFIX}Upload path:${FONT_COLOR_SUFFIX} ${UPLOAD_PATH}
+${LIGHT_PURPLE_FONT_PREFIX}Remote path:${FONT_COLOR_SUFFIX} ${REMOTE_PATH}
+-------------------------- [${YELLOW_FONT_PREFIX}TASK INFO${FONT_COLOR_SUFFIX}] --------------------------
+"
 echo
