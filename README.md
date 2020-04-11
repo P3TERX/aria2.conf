@@ -52,7 +52,7 @@
 
 `dht.dat` - DHT（IPv4）文件
 
-`dht6.dat` - DHT（IPv6）文件（目前数据为空，仅用作占位）
+`dht6.dat` - DHT（IPv6）文件
 
 ## FAQ
 
