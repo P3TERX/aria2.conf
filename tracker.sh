@@ -4,7 +4,7 @@
 # File name：tracker.sh
 # Description: Get BT trackers and add to Aria2
 # Lisence: MIT
-# Version: 2.0
+# Version: 2.1
 # Author: P3TERX
 # Blog: https://p3terx.com
 #==============================================
@@ -25,7 +25,7 @@ ARIA2_CONF=${1:-aria2.conf}
 # https://www.jsdelivr.com
 # https://workers.cloudflare.com/
 GET_TRACKERS() {
-    echo && echo -e "$INFO Get BT trackers ..."
+    echo && echo -e "$(date +"%m/%d %H:%M:%S") $INFO Get BT trackers ..."
     TRACKER=$(
         curl -fsSL https://trackerslist.com/all_aria2.txt ||
             curl -fsSL https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection/all_aria2.txt ||
@@ -38,7 +38,7 @@ GET_TRACKERS() {
     )
     [ -z $TRACKER ] && {
         echo
-        echo -e "$ERROR Unable to get trackers, network failure or invalid links." && exit 1
+        echo -e "$(date +"%m/%d %H:%M:%S") $ERROR Unable to get trackers, network failure or invalid links." && exit 1
     }
 }
 
@@ -51,46 +51,46 @@ ${TRACKER}
 }
 
 ADD_TRACKERS() {
-    echo -e "$INFO Adding BT trackers to Aria2 configuration file ${LIGHT_PURPLE_FONT_PREFIX}${ARIA2_CONF}${FONT_COLOR_SUFFIX} ..." && echo
+    echo -e "$(date +"%m/%d %H:%M:%S") $INFO Adding BT trackers to Aria2 configuration file ${LIGHT_PURPLE_FONT_PREFIX}${ARIA2_CONF}${FONT_COLOR_SUFFIX} ..." && echo
     if [ ! -f ${ARIA2_CONF} ]; then
-        echo -e "$ERROR '${ARIA2_CONF}' does not exist."
+        echo -e "$(date +"%m/%d %H:%M:%S") $ERROR '${ARIA2_CONF}' does not exist."
         exit 1
     else
         [ -z $(grep "bt-tracker=" ${ARIA2_CONF}) ] && echo "bt-tracker=" >>${ARIA2_CONF}
-        sed -i "s@^\(bt-tracker=\).*@\1${TRACKER}@" ${ARIA2_CONF} && echo -e "$INFO BT trackers successfully added to Aria2 configuration file !"
+        sed -i "s@^\(bt-tracker=\).*@\1${TRACKER}@" ${ARIA2_CONF} && echo -e "$(date +"%m/%d %H:%M:%S") $INFO BT trackers successfully added to Aria2 configuration file !"
     fi
 }
 
 ADD_TRACKERS_REMOTE_RPC() {
-    echo -e "$INFO Adding BT trackers to remote Aria2: ${LIGHT_PURPLE_FONT_PREFIX}${RPC_ADDRESS}${FONT_COLOR_SUFFIX} ..." && echo
+    echo -e "$(date +"%m/%d %H:%M:%S") $INFO Adding BT trackers to remote Aria2: ${LIGHT_PURPLE_FONT_PREFIX}${RPC_ADDRESS}${FONT_COLOR_SUFFIX} ..." && echo
     RPC_STATUS=$(curl "$RPC_ADDRESS/jsonrpc" -fsSd '{"jsonrpc":"2.0","method":"aria2.changeGlobalOption","id":"trackers","params":["token:'$RPC_SECRET'",{"bt-tracker":"'$TRACKER'"}]}')
     [ $(echo $RPC_STATUS | grep OK) ] &&
-        echo -e "$INFO BT trackers successfully added to remote Aria2 !" ||
-        echo -e "$ERROR Network failure or Aria2 RPC address is incorrect."
+        echo -e "$(date +"%m/%d %H:%M:%S") $INFO BT trackers successfully added to remote Aria2 !" ||
+        echo -e "$(date +"%m/%d %H:%M:%S") $ERROR Network failure or Aria2 RPC address is incorrect."
 }
 
 ADD_TRACKERS_LOCAL_RPC() {
     if [ ! -f ${ARIA2_CONF} ]; then
-        echo -e "$ERROR '${ARIA2_CONF}' does not exist."
+        echo -e "$(date +"%m/%d %H:%M:%S") $ERROR '${ARIA2_CONF}' does not exist."
         exit 1
     else
         RPC_PORT=$(grep rpc-listen-port ${ARIA2_CONF} | cut -d= -f2)
         RPC_SECRET=$(grep rpc-secret ${ARIA2_CONF} | cut -d= -f2)
         [[ $RPC_PORT && $RPC_SECRET ]] || {
-            echo -e "$ERROR Aria2 configuration file incomplete."
+            echo -e "$(date +"%m/%d %H:%M:%S") $ERROR Aria2 configuration file incomplete."
             exit 1
         }
         RPC_ADDRESS="localhost:$RPC_PORT"
-        echo -e "$INFO Adding BT trackers to Aria2 ..." && echo
+        echo -e "$(date +"%m/%d %H:%M:%S") $INFO Adding BT trackers to Aria2 ..." && echo
         RPC_STATUS=$(curl "$RPC_ADDRESS/jsonrpc" -fsSd '{"jsonrpc":"2.0","method":"aria2.changeGlobalOption","id":"trackers","params":["token:'$RPC_SECRET'",{"bt-tracker":"'$TRACKER'"}]}')
         [ $(echo $RPC_STATUS | grep OK) ] &&
-            echo -e "$INFO BT trackers successfully added to Aria2 !" ||
-            echo -e "$ERROR Network failure or Aria2 RPC address is incorrect."
+            echo -e "$(date +"%m/%d %H:%M:%S") $INFO BT trackers successfully added to Aria2 !" ||
+            echo -e "$(date +"%m/%d %H:%M:%S") $ERROR Network failure or Aria2 RPC address is incorrect."
     fi
 }
 
 [ $(command -v curl) ] || {
-    echo -e "$ERROR curl is not installed."
+    echo -e "$(date +"%m/%d %H:%M:%S") $ERROR curl is not installed."
     exit 1
 }
 
