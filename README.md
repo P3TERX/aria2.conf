@@ -14,14 +14,15 @@
 * 下载完成自动清除`.aria2`后缀名文件
 * 一键获取 BT tracker，进一步提升 BT 下载速度
 * 更好的 PT 下载支持
-* 防版权投诉、防迅雷吸血
+* 防版权投诉
+* 防迅雷吸血（部分版本）
 * 联动 RCLONE 自动上传
 
 ## 部署方案
 
-- [Aria2 一键安装管理脚本](https://github.com/P3TERX/aria2.sh) 
+- [Aria2 Pro](https://github.com/P3TERX/docker-aria2-pro) (Docker)
 
-- [Aria2 Pro](https://github.com/P3TERX/docker-aria2-pro) Docker 容器镜像
+- [Aria2 一键安装管理脚本 增强版](https://github.com/P3TERX/aria2.sh) (GNU/Linux)
 
 ## 进阶玩法
 
@@ -30,21 +31,23 @@
 
 ## 文件说明
 
-`aria2.conf` - Aria2 配置文件。除非你对这些参数非常了解，否则修改后可能导致特性失效。
+`aria2.conf` - Aria2 配置文件。注意：在不了解的情况下修改可能导致本方案的特性失效。
 
 ### 附加功能脚本
 
 > **TIPS:** 脚本需配合配置文件使用，仅适用于 GNU/Linux
 
-`autoupload.sh` - 自动上传脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，调用 Rclone 上传(move)下载的文件到网盘，并删除 `.aria2` 后缀名文件。（默认不启用）
+`delete.sh` - 文件删除脚本：在下载停止后执行([on-download-stop](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-stop))，删除文件及 `.aria2` 后缀名文件。（默认启用）
 
 `delete.aria2.sh` - `*.aria2`文件删除脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，删除 `.aria2` 后缀名文件。（默认启用）
 
-`delete.sh` - 删除脚本：在下载停止后执行([on-download-stop](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-stop))，删除文件及 `.aria2` 后缀名文件。（默认启用）
+`autoupload.sh` - 自动上传脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，自动调用 Rclone 上传(move)下载的文件到网盘，并自动清除 `.aria2` 后缀名文件与空目录。（默认不启用）
+
+`move.sh` - 文件移动脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，将下载完成的文件移动到指定目录，并自动清除 `.aria2` 后缀名文件与空目录。（默认不启用）
+
+`tracker.sh` - BT tracker 列表更新脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。此脚本还有更强大的功能，具体使用方法详见[这里](https://github.com/P3TERX/aria2.conf/blob/master/tracker.md)。
 
 `info.sh` - 任务信息显示脚本：在下载暂停后执行([on-download-pause](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-pause))，输出下载任务信息到日志中。（debug 专用）
-
-`tracker.sh` - BT tracker 获取脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。执行`bash <(wget -qO- git.io/tracker.sh)`命令获取最新脚本并直接运行。其它使用方法详见[这里](https://p3terx.com/archives/solved-aria2-cant-download-magnetic-link-bt-seed-and-slow-speed.html)。
 
 ### DHT 文件
 
@@ -59,6 +62,17 @@
 遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[Aria2 TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。诸如 “为什么不能使用？”、“那你能帮帮我吗？” 之类的问题并不能解决什么问题，你只能得到否定的回答。
 
 ## 更新日志
+
+### 2020-04-16
+
+- 新增 文件移动脚本(`move.sh`)，将下载完成的文件移动到指定目录。与自动上传脚本类似，对于 BT 多文件可完整保留目录结构。
+
+<details>
+<summary>历史记录</summary>
+
+### 2020-04-12
+
+- 重构 BT tracker 列表更新脚本(`tracker.sh`) ，增加通过 RPC 方式更新 BT tracker 的功能，无需重启 Aria2 即可生效。
 
 ### 2020-03-11
 
@@ -78,9 +92,6 @@ RCLONE 自动上传脚本（`autoupload.sh`） ：
 - 优化自动删除脚本（`delete.sh`、`delete.aria2.sh`）判断逻辑。
 - 移除配置文件(`aria2.conf`)过时配置项
 - 更新 DHT 文件
-
-<details>
-<summary>历史记录</summary>
 
 ### 2020-02-05
 
