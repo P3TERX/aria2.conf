@@ -4,7 +4,7 @@
 # File name：move.sh
 # Description: Move files after Aria2 download is complete
 # Lisence: MIT
-# Version: 1.0
+# Version: 1.1
 # Author: P3TERX
 # Blog: https://p3terx.com
 #=========================================================
@@ -15,8 +15,8 @@ DOWNLOAD_PATH='/root/Download'
 # 目标目录
 TARGET_DIR='/root/Download/completed'
 
-# 日志保存路径（留空为不保存）
-MOVE_LOG_PATH='/root/.aria2/move.log'
+# 日志保存路径。注释或留空为不保存。
+#LOG_PATH='/root/.aria2/move.log'
 
 #============================================================
 
@@ -51,10 +51,10 @@ MOVE_FILE() {
     MOVE_EXIT_CODE=$?
     if [ ${MOVE_EXIT_CODE} -eq 0 ]; then
         echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Move done: ${SOURCE_PATH} -> ${TARGET_PATH}"
-        [ $MOVE_LOG_PATH ] && echo -e "$(date +"%m/%d %H:%M:%S") [INFO] Move done: ${SOURCE_PATH} -> ${TARGET_PATH}" >>${MOVE_LOG_PATH}
+        [ $LOG_PATH ] && echo -e "$(date +"%m/%d %H:%M:%S") [INFO] Move done: ${SOURCE_PATH} -> ${TARGET_PATH}" >>${LOG_PATH}
     else
         echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Move failed: ${SOURCE_PATH}"
-        [ $MOVE_LOG_PATH ] && echo -e "$(date +"%m/%d %H:%M:%S") [ERROR] Move failed: ${SOURCE_PATH}" >>${MOVE_LOG_PATH}
+        [ $LOG_PATH ] && echo -e "$(date +"%m/%d %H:%M:%S") [ERROR] Move failed: ${SOURCE_PATH}" >>${LOG_PATH}
     fi
     echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Clean up extra files ..."
     [ -e "${DOT_ARIA2_FILE}" ] && rm -vf "${DOT_ARIA2_FILE}"
