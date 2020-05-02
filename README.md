@@ -14,9 +14,8 @@
 * 下载完成自动清除`.aria2`后缀名文件
 * 一键获取 BT tracker，进一步提升 BT 下载速度
 * 更好的 PT 下载支持
-* 防版权投诉
-* 防迅雷吸血（部分版本）
-* 联动 RCLONE 自动上传
+* 有一定的防版权投诉、防迅雷吸血能力
+* 联动 RCLONE 自动上传到 Google Drive 和 OneDrive 等网盘
 
 ## 部署方案
 
@@ -62,6 +61,12 @@
 遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[Aria2 TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。诸如 “为什么不能使用？”、“那你能帮帮我吗？” 之类的问题并不能解决什么问题，你只能得到否定的回答。
 
 ## 更新日志
+
+### 2020-05-03
+
+配置文件(`aria2.conf`)：
+- 优化 部分设置选项与注释说明。
+- 增加 非官方增强选项。仅适用于 [myfreeer/aria2-build-msys2](https://github.com/myfreeer/aria2-build-msys2) 和 [P3TERX/aria2-builder](https://github.com/P3TERX/aria2-builder) 项目所构建的版本。
 
 ### 2020-04-16
 
