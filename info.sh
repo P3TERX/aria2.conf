@@ -4,7 +4,7 @@
 # File name：info.sh
 # Description: Display Aria2 download information when paused
 # Lisence: MIT
-# Version: 2.0
+# Version: 2.1
 # Author: P3TERX
 # Blog: https://p3terx.com
 #============================================================
@@ -12,8 +12,8 @@
 DOWNLOAD_PATH='/root/Download'
 
 FILE_PATH=$3
-REMOVE_DOWNLOAD_PATH=${FILE_PATH#${DOWNLOAD_PATH}/}
-TOP_PATH=${DOWNLOAD_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}
+RELATIVE_PATH=${FILE_PATH#${DOWNLOAD_PATH}/}
+TOP_PATH=${DOWNLOAD_PATH}/${RELATIVE_PATH%%/*}
 LIGHT_GREEN_FONT_PREFIX="\033[1;32m"
 YELLOW_FONT_PREFIX="\033[1;33m"
 LIGHT_PURPLE_FONT_PREFIX="\033[1;35m"
@@ -31,10 +31,10 @@ if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then
     REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"
 elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -gt 1 ]; then
     UPLOAD_PATH="${TOP_PATH}"
-    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${RELATIVE_PATH%%/*}"
 elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -eq 1 ]; then
     UPLOAD_PATH="${FILE_PATH}"
-    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%/*}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${RELATIVE_PATH%/*}"
 fi
 
 echo

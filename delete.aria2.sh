@@ -4,7 +4,7 @@
 # File name：delete.aria2.sh
 # Description: Delete .aria2 file after Aria2 download is complete
 # Lisence: MIT
-# Version: 2.0
+# Version: 2.1
 # Author: P3TERX
 # Blog: https://p3terx.com
 #=================================================================
@@ -12,8 +12,8 @@
 DOWNLOAD_PATH='/root/Download'
 
 FILE_PATH=$3
-REMOVE_DOWNLOAD_PATH=${FILE_PATH#${DOWNLOAD_PATH}/}
-TOP_PATH=${DOWNLOAD_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}
+RELATIVE_PATH=${FILE_PATH#${DOWNLOAD_PATH}/}
+TOP_PATH=${DOWNLOAD_PATH}/${RELATIVE_PATH%%/*}
 LIGHT_GREEN_FONT_PREFIX="\033[1;32m"
 FONT_COLOR_SUFFIX="\033[0m"
 INFO="[${LIGHT_GREEN_FONT_PREFIX}INFO${FONT_COLOR_SUFFIX}]"
