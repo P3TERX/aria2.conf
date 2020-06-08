@@ -14,7 +14,7 @@
 * 下载完成自动清除`.aria2`后缀名文件
 * 一键获取 BT tracker，进一步提升 BT 下载速度
 * 更好的 PT 下载支持
-* 有一定的防版权投诉、防迅雷吸血能力
+* 有一定的防版权投诉、防迅雷吸血效果
 * 联动 RCLONE 自动上传到 Google Drive 和 OneDrive 等网盘
 
 ## 部署方案
@@ -52,15 +52,27 @@
 
 提升 BT 下载率和下载速度的关键之一。相关科普：《[解决 Aria2 无法下载磁力链接、BT种子和速度慢的问题](https://p3terx.com/archives/solved-aria2-cant-download-magnetic-link-bt-seed-and-slow-speed.html)》
 
-`dht.dat` - DHT（IPv4）文件
+`dht.dat` - IPv4 DHT 文件
 
-`dht6.dat` - DHT（IPv6）文件
+`dht6.dat` - IPv6 DHT 文件
 
 ## FAQ
 
-遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[Aria2 TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。诸如 “为什么不能使用？”、“那你能帮帮我吗？” 之类的问题并不能解决什么问题，你只能得到否定的回答。
+遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[Aria2 TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。诸如 “为什么不能使用？”、“那你能帮帮我吗？” 之类的问题应该没有人会知道。
 
 ## 更新日志
+
+### 2020-06-08
+
+配置文件(`aria2.conf`)：
+- 默认关闭文件预分配(`file-allocation=none`)，最大化文件系统兼容性。
+- 其它细节改进
+
+其它：
+- 更新 DHT 文件
+
+<details>
+<summary>历史记录</summary>
 
 ### 2020-05-03
 
@@ -71,9 +83,6 @@
 ### 2020-04-16
 
 - 新增 文件移动脚本(`move.sh`)，将下载完成的文件移动到指定目录。与自动上传脚本类似，对于 BT 多文件可完整保留目录结构。
-
-<details>
-<summary>历史记录</summary>
 
 ### 2020-04-12
 
