@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-#=========================================================
+#
+# Copyright (c) 2018-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
 # https://github.com/P3TERX/aria2.conf
 # File name：move.sh
 # Description: Move files after Aria2 download is complete
-# Lisence: MIT
-# Version: 1.1
-# Author: P3TERX
-# Blog: https://p3terx.com
-#=========================================================
+# Version: 2.0
+#
 
 # Aria2下载目录
 DOWNLOAD_PATH='/root/Download'
@@ -46,7 +48,7 @@ ${LIGHT_PURPLE_FONT_PREFIX}Target path:${FONT_COLOR_SUFFIX} ${TARGET_PATH}
 MOVE_FILE() {
     echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Start move files ..."
     TASK_INFO
-    mkdir -p ${TARGET_PATH}
+    mkdir -p "${TARGET_PATH}"
     mv -f "${SOURCE_PATH}" "${TARGET_PATH}"
     MOVE_EXIT_CODE=$?
     if [ ${MOVE_EXIT_CODE} -eq 0 ]; then
@@ -82,7 +84,7 @@ if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 普通单文件下
     exit 0
 elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -gt 1 ]; then # BT下载（文件夹内文件数大于1），移动整个文件夹到设定的文件夹。
     SOURCE_PATH="${TOP_PATH}"
-    TARGET_PATH="${TARGET_DIR}/${RELATIVE_PATH%%/*}"
+    TARGET_PATH="${TARGET_DIR}"
     MOVE_FILE
     exit 0
 elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 第三方度盘工具下载（子文件夹或多级目录等情况下的单文件下载）、BT下载（文件夹内文件数等于1），移动文件到设定的文件夹下的相同路径文件夹。

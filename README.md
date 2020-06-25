@@ -4,7 +4,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Stars&logo=github)](https://github.com/P3TERX/aria2_perfect_config/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/P3TERX/aria2_perfect_config.svg?style=flat-square&label=Forks&logo=github)](https://github.com/P3TERX/aria2_perfect_config/fork)
 
-本项目是一套 Aria2 配置方案，包含了配置文件、附加功能脚本等文件，用于实现 Aria2 功能的增强和扩展，提升 Aria2 的使用体验，解决 Aria2 在使用中遇到的 BT 下载无速度、文件残留占用磁盘空间、任务丢失、重复下载等问题。
+本项目是一套 Aria2 配置方案，包含了配置文件、附加功能脚本等文件，用于实现 Aria2 功能的增强和扩展，提升 Aria2 的下载速度与使用体验，解决 Aria2 在使用中遇到的 BT 下载无速度、文件残留占用磁盘空间、任务丢失、重复下载等问题。
 
 ## 功能特性
 
@@ -19,6 +19,8 @@
 
 ## 部署方案
 
+**推荐使用以下项目部署以获得最佳使用体验**
+
 - [Aria2 Pro](https://github.com/P3TERX/docker-aria2-pro) (Docker)
 
 - [Aria2 一键安装管理脚本 增强版](https://github.com/P3TERX/aria2.sh) (GNU/Linux)
@@ -30,37 +32,41 @@
 
 ## 文件说明
 
-`aria2.conf` - Aria2 配置文件。注意：在不了解的情况下修改可能导致本方案的特性失效。
-
-### 附加功能脚本
-
 > **TIPS:** 脚本需配合配置文件使用，仅适用于 GNU/Linux
 
-`delete.sh` - 文件删除脚本：在下载停止后执行([on-download-stop](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-stop))，删除文件及 `.aria2` 后缀名文件。（默认启用）
+| 文件                    | 说明                                                                                                                                                                                                                                                                 |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `aria2.conf`            | Aria2 配置文件。建议使用 1.35.0 及以上版本，在不了解的情况下修改可能导致本方案的特性失效。                                                                                                                                                                           |
+| `delete.sh`             | 文件删除脚本。在下载停止后执行([on-download-stop](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-stop))，自动删除文件及 `.aria2` 后缀名文件，防止不必要的磁盘空间占用。（默认启用）                                                        |
+| `clean.sh`              | 清理脚本。在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，自动清除 `.aria2` 后缀名文件。（默认启用）                                                                                    |
+| `upload.sh`             | 上传脚本。在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，自动调用 RCLONE 上传(move)下载的文件到网盘，并自动清除 `.aria2` 后缀名文件与空目录。（默认不启用）                            |
+| `move.sh`               | 文件移动脚本。在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，自动将下载完成的文件移动到指定目录，并自动清除 `.aria2` 后缀名文件与空目录。（默认不启用）                                |
+| `tracker.sh`            | BT tracker 列表更新脚本。在 Aria2 配置文件(`aria2.conf`)所在目录执行即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。此脚本还有更强大的功能，具体使用方法详见 [tracker.md](./tracker.md) |
+| `dht.dat`<br>`dht6.dat` | DHT 文件。提升 BT 下载率和下载速度的关键之一。相关科普：《[解决 Aria2 无法下载磁力链接、BT种子和速度慢的问题](https://p3terx.com/archives/solved-aria2-cant-download-magnetic-link-bt-seed-and-slow-speed.html)》                                                    |
 
-`delete.aria2.sh` - `*.aria2`文件删除脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，删除 `.aria2` 后缀名文件。（默认启用）
+## 遇到问题如何处理
 
-`autoupload.sh` - 自动上传脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，自动调用 Rclone 上传(move)下载的文件到网盘，并自动清除 `.aria2` 后缀名文件与空目录。（默认不启用）
-
-`move.sh` - 文件移动脚本：在下载完成后执行([on-download-complete](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-complete))，将下载完成的文件移动到指定目录，并自动清除 `.aria2` 后缀名文件与空目录。（默认不启用）
-
-`tracker.sh` - BT tracker 列表更新脚本：在 Aria2 配置文件(`aria2.conf`)所在目录执行即可获取[最新 tracker 列表](https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt)并添加到配置文件中。此脚本还有更强大的功能，具体使用方法详见[这里](https://github.com/P3TERX/aria2.conf/blob/master/tracker.md)。
-
-`info.sh` - 任务信息显示脚本：在下载暂停后执行([on-download-pause](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-on-download-pause))，输出下载任务信息到日志中。（debug 专用）
-
-### DHT 文件
-
-提升 BT 下载率和下载速度的关键之一。相关科普：《[解决 Aria2 无法下载磁力链接、BT种子和速度慢的问题](https://p3terx.com/archives/solved-aria2-cant-download-magnetic-link-bt-seed-and-slow-speed.html)》
-
-`dht.dat` - IPv4 DHT 文件
-
-`dht6.dat` - IPv6 DHT 文件
-
-## FAQ
-
-遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，这会为大家都省下很多宝贵的时间。你还可以加入[Aria2 TG群](https://t.me/Aria2c)和小伙伴们一起讨论。提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。诸如 “为什么不能使用？”、“那你能帮帮我吗？” 之类的问题应该没有人会知道。
+遇到问题先看 [FAQ](https://p3terx.com/archives/aria2_perfect_config-faq.html) 再提问，你还可以加入 [Aria2 TG 群](https://t.me/Aria2c)和小伙伴们一起讨论。要注意提问的方式和提供有用的信息，提问前建议去学习《[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)》，这能更好的帮助你去解决问题和节约时间。诸如 “为什么不能使用？”、“那你能帮帮我吗？” 之类的问题应该没有人会知道。
 
 ## 更新日志
+
+**全新版本即将来袭，敬请期待...**
+
+更新推送：[Aria2 Channel](https://t.me/Aria2_Channel)
+
+### 2020-06-27 | V2 终极版
+
+配置文件(`aria2.conf`)：
+- 优化选项参数，提升下载速度与使用体验
+- 优化排版格式及注释说明，提升阅读体验
+
+附加功能脚本：
+- `delete.aria2.sh`更名为`clean.sh`
+- `autoupload.sh`更名为`upload.sh`
+- 细节改进，提升使用体验
+
+<details>
+<summary>历史记录</summary>
 
 ### 2020-06-08
 
@@ -70,9 +76,6 @@
 
 其它：
 - 更新 DHT 文件
-
-<details>
-<summary>历史记录</summary>
 
 ### 2020-05-03
 
@@ -256,4 +259,4 @@ RCLONE 自动上传脚本（`autoupload.sh`） ：
 
 ## 声明
 
-本项目使用 [MIT](https://github.com/P3TERX/aria2.conf/blob/master/LICENSE) 开源协议，对于本项复制、修改、发布等行为请遵守相关协议，并保留所有文件顶部的版权信息。
+本项目使用 [MIT](https://github.com/P3TERX/aria2.conf/blob/master/LICENSE) 开源协议，对于本项复制、修改、发布等行为请遵守相关协议保留所有文件中的版权信息，谢谢合作！

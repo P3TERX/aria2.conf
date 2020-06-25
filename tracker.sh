@@ -1,13 +1,15 @@
-#!/bin/bash
-#==============================================
+#!/usr/bin/env bash
+#
+# Copyright (c) 2018-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
 # https://github.com/P3TERX/aria2.conf
 # File name：tracker.sh
 # Description: Get BT trackers and add to Aria2
-# Lisence: MIT
 # Version: 2.3
-# Author: P3TERX
-# Blog: https://p3terx.com
-#==============================================
+#
 
 RED_FONT_PREFIX="\033[31m"
 GREEN_FONT_PREFIX="\033[32m"

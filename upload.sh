@@ -1,29 +1,29 @@
 #!/usr/bin/env bash
-#============================================================
+#
+# Copyright (c) 2018-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
 # https://github.com/P3TERX/aria2.conf
-# File name：autoupload.sh
-# Description: Aria2 download completes calling Rclone upload
-# Lisence: MIT
-# Version: 2.1
-# Author: P3TERX
-# Blog: https://p3terx.com
-#============================================================
+# File name：upload.sh
+# Description: Use Rclone to upload files after Aria2 download is complete
+# Version: 2.2
+#
 
 ## 基础设置 ##
 
 # Aria2 下载目录
-# Aria2 一键安装管理脚本 增强版 请使用菜单选项统一进行修改。
-# Aria2 Pro (Docker) 无需修改，通过目录映射进行设置。
 DOWNLOAD_PATH='/root/Download'
 
-# Rclone 配置时填写的网盘名(name)
+# Rclone 配置时填写的网盘名
 DRIVE_NAME='Onedrive'
 
 # 网盘目录。即上传目标路径，留空为网盘根目录，末尾不要有斜杠。
 DRIVE_PATH='/DRIVEX/Download'
 
 # 日志保存路径。注释或留空为不保存。
-#LOG_PATH='/root/.aria2/autoupload.log'
+#LOG_PATH='/root/.aria2/upload.log'
 
 ## 文件过滤 ##
 
@@ -136,27 +136,6 @@ if [ -z $2 ]; then
 elif [ $2 -eq 0 ]; then
     exit 0
 fi
-
-echo
-echo -e "
------------------------------------------------------------
-    _         _          _   _       _                 _ 
-   / \  _   _| |_ ___   | | | |_ __ | | ___   __ _  __| |
-  / _ \| | | | __/ _ \  | | | | '_ \| |/ _ \ / _\` |/ _\` |
- / ___ \ |_| | || (_) | | |_| | |_) | | (_) | (_| | (_| |
-/_/   \_\__,_|\__\___/   \___/| .__/|_|\___/ \__,_|\__,_|
-                              |_|
-
-https://github.com/P3TERX/aria2.conf
-File name：autoupload.sh
-Description: Aria2 download completes calling Rclone upload
-Lisence: MIT
-Version: 2.0
-Author: P3TERX
-Blog: https://p3terx.com
------------------------------------------------------------
-"
-echo
 
 if [ -e "${FILE_PATH}.aria2" ]; then
     DOT_ARIA2_FILE="${FILE_PATH}.aria2"

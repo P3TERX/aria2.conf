@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-#=================================================================
+#
+# Copyright (c) 2018-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
 # https://github.com/P3TERX/aria2.conf
-# File name：delete.aria2.sh
+# File name：clean.sh
 # Description: Delete .aria2 file after Aria2 download is complete
-# Lisence: MIT
 # Version: 2.1
-# Author: P3TERX
-# Blog: https://p3terx.com
-#=================================================================
+#
 
 DOWNLOAD_PATH='/root/Download'
 
