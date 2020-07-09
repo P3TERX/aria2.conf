@@ -7,25 +7,26 @@
 #
 # https://github.com/P3TERX/aria2.conf
 # File name：clean.sh
-# Description: Delete .aria2 file after Aria2 download is complete
-# Version: 2.1
+# Description: Remove redundant files after Aria2 download is complete
+# Version: 3.0
 #
 
-DOWNLOAD_PATH='/root/Download'
+CHECK_CORE_FILE() {
+    CORE_FILE="$(dirname $0)/core"
+    if [[ -f "${CORE_FILE}" ]]; then
+        . "${CORE_FILE}"
+    else
+        echo "!!! core file does not exist !!!"
+        exit 1
+    fi
+}
 
-FILE_PATH=$3
-RELATIVE_PATH=${FILE_PATH#${DOWNLOAD_PATH}/}
-TOP_PATH=${DOWNLOAD_PATH}/${RELATIVE_PATH%%/*}
-LIGHT_GREEN_FONT_PREFIX="\033[1;32m"
-FONT_COLOR_SUFFIX="\033[0m"
-INFO="[${LIGHT_GREEN_FONT_PREFIX}INFO${FONT_COLOR_SUFFIX}]"
-
-echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Delete .aria2 file ..."
-
-if [ $2 -eq 0 ]; then
-    exit 0
-elif [ -e "${FILE_PATH}.aria2" ]; then
-    rm -vf "${FILE_PATH}.aria2"
-elif [ -e "${TOP_PATH}.aria2" ]; then
-    rm -vf "${TOP_PATH}.aria2"
-fi
+CHECK_CORE_FILE "$@"
+CHECK_PARAMETER "$@"
+CHECK_FILE_NUM
+CHECK_SCRIPT_CONF
+GET_TASK_INFO
+GET_DOWNLOAD_DIR
+CONVERSION_PATH
+CLEAN_UP
+exit 0
