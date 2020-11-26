@@ -8,7 +8,7 @@
 # https://github.com/P3TERX/aria2.conf
 # File name：upload.sh
 # Description: Use Rclone to upload files after Aria2 download is complete
-# Version: 3.0
+# Version: 3.1
 #
 
 CHECK_CORE_FILE() {
@@ -72,7 +72,7 @@ DEFINITION_PATH() {
 
 LOAD_RCLONE_ENV() {
     RCLONE_ENV_FILE="${ARIA2_CONF_DIR}/rclone.env"
-    [[ -f ${RCLONE_ENV_FILE} ]] && . ${RCLONE_ENV_FILE}
+    [[ -f ${RCLONE_ENV_FILE} ]] && export $(grep -Ev "^#|^$" ${RCLONE_ENV_FILE} | xargs -0)
 }
 
 UPLOAD_FILE() {
