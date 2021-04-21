@@ -26,22 +26,30 @@ INFO="[${GREEN_FONT_PREFIX}INFO${FONT_COLOR_SUFFIX}]"
 ERROR="[${RED_FONT_PREFIX}ERROR${FONT_COLOR_SUFFIX}]"
 ARIA2_CONF=${1:-aria2.conf}
 DOWNLOADER="curl -fsSL --connect-timeout 3 --max-time 3 --retry 2"
+NL=$'\n'
 
 DATE_TIME() {
     date +"%m/%d %H:%M:%S"
 }
 
 GET_TRACKERS() {
-    echo && echo -e "$(DATE_TIME) ${INFO} Get BT trackers ..."
+    
     if [[ -z "${CUSTOM_TRACKER_URL}" ]]; then
+        echo && echo -e "$(DATE_TIME) ${INFO} Get BT trackers..."
         TRACKER=$(
             ${DOWNLOADER} https://trackerslist.com/all_aria2.txt ||
                 ${DOWNLOADER} https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection@master/all_aria2.txt ||
                 ${DOWNLOADER} https://trackers.p3terx.com/all_aria2.txt
         )
     else
-        TRACKER=$(${DOWNLOADER} ${CUSTOM_TRACKER_URL} | awk NF | sed ":a;N;s/\n/,/g;ta")
+        echo && echo -e "$(DATE_TIME) ${INFO} Get BT trackers from url(s):${CUSTOM_TRACKER_URL} ..."
+        URLS=$(echo ${CUSTOM_TRACKER_URL} | tr "," "$NL")
+        for URL in $URLS; do
+            TRACKER+="$(${DOWNLOADER} ${URL} | tr "," "\n")$NL"
+        done
+        TRACKER="$(echo "$TRACKER" | awk NF | sort -u | sed 'H;1h;$!d;x;y/\n/,/' )"
     fi
+
     [[ -z "${TRACKER}" ]] && {
         echo
         echo -e "$(DATE_TIME) ${ERROR} Unable to get trackers, network failure or invalid links." && exit 1
