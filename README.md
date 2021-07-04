@@ -60,6 +60,12 @@
 
 更新推送：[Aria2 Channel](https://t.me/Aria2_Channel)
 
+### 2021-07-04
+
+- 新增 正则表达式文件过滤功能。感谢 @hereisderek
+- 新增 支持自定义多个 tracker 列表 URL ([Aria2 Pro](https://github.com/P3TERX/Aria2-Pro-Docker))。感谢 @hereisderek
+- 修复 目录名有特殊符号时导致的路径处理错误。感谢 @zzjjbb
+
 ### 2020-12-24
 
 - 调整一些过于激进的配置选项值，提升稳定性。
